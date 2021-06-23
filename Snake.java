@@ -23,10 +23,11 @@ public class Snake extends JFrame{
     JMenu menu;
     
     final int XWIDTH=700;
-    final int YHEIGHT=730;
+    final int YHEIGHT=700;
     public Snake(){
         menuBar=new JMenuBar();
         this.setJMenuBar(menuBar);
+        menuBar.add(Box.createRigidArea(new Dimension(100,25)));
       
         menu = new JMenu("A Menu");
         menuBar.add(menu);
@@ -36,22 +37,35 @@ public class Snake extends JFrame{
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.pack();
         this.toFront();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
     public void paint(Graphics g){
-        int xOffset=50;
-        int yOffset=70;
+        final int YOFFSET=32;
+        final int BORDERWIDTH=50;
         
         g.setColor(Color.black);
-        g.fillRect(xOffset,yOffset,XWIDTH-100,YHEIGHT-100);
+        g.fillRect(50,50+YOFFSET,XWIDTH-100,YHEIGHT-100);
         g.setColor(Color.white);
-        for(int i=50;i<600;i+=50){
-            g.drawLine(i+xOffset, yOffset, i+xOffset, YHEIGHT);
+        for(int i=50;i<YHEIGHT;i+=50){
+            g.drawLine(i,50+YOFFSET,i,YHEIGHT-100);//draw a vertical line
         }
-        for(int i=50;i<600;i+=50){
-            g.drawLine(0, i, 600, i);
+        for(int i=50;i<750;i+=50){
+            g.drawLine(50, i, 550, i);
         }
     }
+     public void newApple(){
+        int appleXGrid = random.nextInt(15);
+        appleX = appleXGrid*DOTSIZE+XOFFSET;
+        int appleYGrid = random.nextInt(15);
+        appleY = appleYGrid*DOTSIZE+YOFFSET;       
+    }
+    public void gameOver(Graphics g) {
+        g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize)); 
+        g.drawString("Game Over", 300, 300);
+    }
+}+
 }
 
 
